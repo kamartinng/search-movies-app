@@ -6,6 +6,7 @@ import MovieHeading from "./components/MovieHeading";
 import SearchBox from "./components/SearchBox";
 import AddFavorites from "./components/AddFavorites";
 import RemoveFavorites from "./components/RemoveFavorites";
+import { API_KEY } from "./apikey";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -13,7 +14,7 @@ function App() {
   const [favoriteMovies, setFavoritesMovies] = useState([]);
 
   const getMovieRequest = async (searchValue) => {
-    const url = `http://www.omdbapi.com/?S=${searchValue}&apikey=78c084be`;
+    const url = `http://www.omdbapi.com/?S=${searchValue}&apikey=${API_KEY}`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
@@ -70,9 +71,10 @@ function App() {
         <MovieHeading heading="Favorites" />
       </div>
       <div className="row-container">
-        <MovieList movies={favoriteMovies}
-        favoriteComponent={RemoveFavorites}
-        handleFavoriteMoviesClick={removeFavoriteMovie}
+        <MovieList
+          movies={favoriteMovies}
+          favoriteComponent={RemoveFavorites}
+          handleFavoriteMoviesClick={removeFavoriteMovie}
         />
       </div>
     </div>
