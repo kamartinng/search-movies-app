@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const MovieList = (props) => {
   const AddFavoriteComponent = props.favoriteComponent;
@@ -21,5 +22,15 @@ const MovieList = (props) => {
     </>
   );
 };
+
+// MovieList.propTypes = {
+//   handleFavoriteMoviesClick: PropTypes.func,
+//   movies: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       imdbID: PropTypes.string,
+//       Poster: PropTypes.string,
+//     })
+//   ),
+// };
 
 export default MovieList;

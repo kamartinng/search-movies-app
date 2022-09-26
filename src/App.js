@@ -61,21 +61,25 @@ function App() {
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       <div className="row-container">
-        <MovieList
-          movies={movies}
-          favoriteComponent={AddFavorites}
-          handleFavoriteMoviesClick={addFavoriteMovie}
-        />
+        {movies && (
+          <MovieList
+            movies={movies}
+            favoriteComponent={AddFavorites}
+            handleFavoriteMoviesClick={addFavoriteMovie}
+          />
+        )}
       </div>
       <div className="row-container heading-container">
-        <MovieHeading heading="Favorites" />
+        <MovieHeading heading="Favorites"/>
       </div>
       <div className="row-container">
-        <MovieList
-          movies={favoriteMovies}
-          favoriteComponent={RemoveFavorites}
-          handleFavoriteMoviesClick={removeFavoriteMovie}
-        />
+        {favoriteMovies && (
+          <MovieList
+            movies={favoriteMovies}
+            favoriteComponent={RemoveFavorites}
+            handleFavoriteMoviesClick={removeFavoriteMovie}
+          />
+        )}
       </div>
     </div>
   );
