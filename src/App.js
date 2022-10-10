@@ -22,10 +22,11 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
+          console.log("data.search", data.Search);
           setMovies(data.Search);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => setMovies([]));
   };
 
   useEffect(() => {
@@ -33,9 +34,12 @@ function App() {
   }, [searchValue]);
 
   useEffect(() => {
-    const Items = localStorage.getItem("react-movie-app-favorites");
-    const parsedItems = JSON.parse(Items);
-    setFavoritesMovies(parsedItems);
+    const items = localStorage.getItem("react-movie-app-favorites");
+    const parsedItems = JSON.parse(items);
+
+    if (items) {
+      setFavoritesMovies(parsedItems);
+    }
   }, []);
 
   const saveToLocalStorage = (items) => {
@@ -54,7 +58,6 @@ function App() {
   const addFavoriteMovie = (movie) => {
     const newFavoriteMovies = [...favoriteMovies, movie];
     setFavoritesMovies(newFavoriteMovies);
-    console.log("saved to local storage");
     saveToLocalStorage(newFavoriteMovies);
   };
 
