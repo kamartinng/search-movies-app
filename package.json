@@ -8,16 +8,21 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.1",
     "cypress": "^10.8.0",
+    "gh-pages": "^4.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://kamartinng.github.io/search-movies-app",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "react-scripts test --collect-coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import MovieList from "./MovieList";
 import AddFavorites from "./AddFavorites";
 
-describe("MovieList", () => {
+describe.skip("MovieList", () => {
   const movies = [
     {
       Title: "Star Wars: Episode IV - A New Hope",

@@ -1,12 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 const MovieList = (props) => {
   const AddFavoriteComponent = props.favoriteComponent;
+  console.log(props.movies);
+  if (props.movies?.length <= 0) return;
 
   return (
     <>
-      {props.movies.map((movie) => {
+      {props.movies?.map((movie) => {
         return (
           <div className="movieCard" key={movie.imdbID}>
             <img src={movie.Poster} alt={movie.imdbID}></img>
@@ -22,15 +23,5 @@ const MovieList = (props) => {
     </>
   );
 };
-
-// MovieList.propTypes = {
-//   handleFavoriteMoviesClick: PropTypes.func,
-//   movies: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       imdbID: PropTypes.string,
-//       Poster: PropTypes.string,
-//     })
-//   ),
-// };
 
 export default MovieList;

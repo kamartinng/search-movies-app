@@ -13,15 +13,19 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [favoriteMovies, setFavoritesMovies] = useState([]);
 
-  const getMovieRequest = async (searchValue) => {
+  const getMovieRequest = (searchValue) => {
+    if (!searchValue) return;
+
     const url = `http://www.omdbapi.com/?S=${searchValue}&apikey=${API_KEY}`;
 
-    const response = await fetch(url);
-    const responseJson = await response.json();
-
-    if (responseJson.Search) {
-      setMovies(responseJson.Search);
-    }
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          setMovies(data.Search);
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   useEffect(() => {
@@ -61,25 +65,21 @@ function App() {
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       <div className="row-container">
-        {movies && (
-          <MovieList
-            movies={movies}
-            favoriteComponent={AddFavorites}
-            handleFavoriteMoviesClick={addFavoriteMovie}
-          />
-        )}
+        <MovieList
+          movies={movies}
+          favoriteComponent={AddFavorites}
+          handleFavoriteMoviesClick={addFavoriteMovie}
+        />
       </div>
       <div className="row-container heading-container">
-        <MovieHeading heading="Favorites"/>
+        <MovieHeading heading="Favorites" />
       </div>
       <div className="row-container">
-        {favoriteMovies && (
-          <MovieList
-            movies={favoriteMovies}
-            favoriteComponent={RemoveFavorites}
-            handleFavoriteMoviesClick={removeFavoriteMovie}
-          />
-        )}
+        <MovieList
+          movies={favoriteMovies}
+          favoriteComponent={RemoveFavorites}
+          handleFavoriteMoviesClick={removeFavoriteMovie}
+        />
       </div>
     </div>
   );
