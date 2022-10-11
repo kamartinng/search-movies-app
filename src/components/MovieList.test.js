@@ -40,7 +40,7 @@ describe.skip("MovieList", () => {
     const overlay = screen.getByText("Add to Favorites");
     userEvent.click(overlay);
 
-    const FavoritesContainer = screen.getByText('Remove from Favorite');
+    const FavoritesContainer = screen.getByText("Remove from Favorite");
     expect(FavoritesContainer).toBeInTheDocument();
-  })
+  });
 });

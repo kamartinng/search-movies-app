@@ -6,14 +6,26 @@ import MovieHeading from "./components/MovieHeading";
 import SearchBox from "./components/SearchBox";
 import AddFavorites from "./components/AddFavorites";
 import RemoveFavorites from "./components/RemoveFavorites";
-import { API_KEY } from "./apikey";
+import { API_KEY } from "./apikey"; //@ts-ignore
 
-function App() {
-  const [movies, setMovies] = useState([]);
+export interface MovieType {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+}
+
+type LocalStorageType = string | null;
+
+type ParsedItemsType = MovieType[] | null;
+
+const App = (): JSX.Element => {
+  const [movies, setMovies] = useState<MovieType[]>([]);
   const [searchValue, setSearchValue] = useState("");
-  const [favoriteMovies, setFavoritesMovies] = useState([]);
+  const [favoriteMovies, setFavoritesMovies] = useState<MovieType[]>([]);
 
-  const getMovieRequest = (searchValue) => {
+  const getMovieRequest = (searchValue: string): void => {
     if (!searchValue) return;
 
     const url = `http://www.omdbapi.com/?S=${searchValue}&apikey=${API_KEY}`;
@@ -22,11 +34,10 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          console.log("data.search", data.Search);
           setMovies(data.Search);
         }
       })
-      .catch((err) => setMovies([]));
+      .catch(() => setMovies([]));
   };
 
   useEffect(() => {
@@ -34,19 +45,21 @@ function App() {
   }, [searchValue]);
 
   useEffect(() => {
-    const items = localStorage.getItem("react-movie-app-favorites");
-    const parsedItems = JSON.parse(items);
+    const items: LocalStorageType = localStorage.getItem(
+      "react-movie-app-favorites"
+    );
+    const parsedItems: ParsedItemsType = JSON.parse(items);
 
-    if (items) {
+    if (parsedItems) {
       setFavoritesMovies(parsedItems);
     }
   }, []);
 
-  const saveToLocalStorage = (items) => {
+  const saveToLocalStorage = (items: MovieType[]): void => {
     localStorage.setItem("react-movie-app-favorites", JSON.stringify(items));
   };
 
-  const removeFavoriteMovie = (inputMovie) => {
+  const removeFavoriteMovie = (inputMovie: MovieType): void => {
     const newFavoriteMovies = favoriteMovies.filter((movie) => {
       return movie.imdbID !== inputMovie.imdbID;
     });
@@ -55,7 +68,7 @@ function App() {
     saveToLocalStorage(newFavoriteMovies);
   };
 
-  const addFavoriteMovie = (movie) => {
+  const addFavoriteMovie = (movie: MovieType): void => {
     const newFavoriteMovies = [...favoriteMovies, movie];
     setFavoritesMovies(newFavoriteMovies);
     saveToLocalStorage(newFavoriteMovies);
@@ -86,6 +99,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
